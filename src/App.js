@@ -1,23 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import Home from "./pages/Home";
+import Activity from "./pages/Activity";
+import Site from "./pages/Site";
+import Overview from "./pages/Overview";
+import Posts from "./pages/Posts";
+import Catagories from "./pages/Catagories";
+import Writers from "./pages/Writers";
+import Setting from "./pages/Setting";
+import { useStateContext } from './contexts/ContextProvider';
 
 function App() {
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App ">
+      <BrowserRouter>
+        <div className="flex relative">
+          {activeMenu ? (
+            <div className="w-60 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+              <Sidebar />
+            </div>
+          ) : (
+            <div className="w-16 dark:bg-secondary-dark-bg">
+              <Sidebar />
+            </div>
+          )}
+          <div
+            className={
+              activeMenu
+                ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-60 w-full  '
+                : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
+            }
+          >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/activity" element={<Activity />} />
+            <Route path="/site" element={<Site />} />
+            <Route path="/overview" element={<Overview />} />
+            <Route path="/posts" element={<Posts />} />
+            <Route path="/catagories" element={<Catagories />} />
+            <Route path="/writers" element={<Writers />} />
+            <Route path="/setting" element={<Setting />} />
+          </Routes>
+          </div>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
