@@ -5,11 +5,25 @@ import { horizontalCardsData, toolData } from "../data/dummy";
 import Test from "../components/Test";
 import ToolCard from "../components/ToolCard";
 import { Link } from "react-router-dom";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { useStateContext } from '../contexts/ContextProvider';
 
 export default function Home() {
+
+  const {activeMenu} = useStateContext();
+
+  const slideLeft = () => {
+    var slider = document.getElementById("slider");
+    slider.scrollLeft = slider.scrollLeft - 500;
+  };
+
+  const slideRight = () => {
+    var slider = document.getElementById("slider");
+    slider.scrollLeft = slider.scrollLeft + 500;
+  };
   return (
-    <div className="w-full p-2 bg-gray-200 ">
-      <div className="flex justify-between">
+    <div className="w-full p-4 bg-gray-200 ">
+      <div className="flex justify-between mb-6">
         <div className="ml-5">
           <h1 className="text-3xl font-bold p-2">Blogs Dashboard</h1>
           <p className="text-gray-600 p-2">
@@ -25,16 +39,29 @@ export default function Home() {
       </div>
       <p className="text-2xl ml-5 p-2 font-semibold">Latest Posts </p>
 
-      <div class="flex flex-col max-w-screen-lg mt-10">
-        <div class="flex overflow-x-scroll pb-10">
-          <div class="flex flex-nowrap ml-10 ">
-            {horizontalCardsData.map((card) => (
-              <div class=" px-3 max-w-lg">
-                <Card name={card.cardName} />
-              </div>
-            ))}
-          </div>
+      <div className={activeMenu
+                ? 'flex items-center max-w-screen-lg reletive mt-5 ml-5 pt-5  '
+                : 'flex items-center max-w-screen-xl reletive mt-5  pt-5 '}>
+        <MdChevronLeft
+          className="opacity-50 cursor-pointer hover:opacity-100"
+          onClick={slideLeft}
+          size={40}
+        />
+        <div
+          id="slider"
+          className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+        >
+          {horizontalCardsData.map((card) => (
+          
+              <Card name={card.cardName} />
+            
+          ))}
         </div>
+        <MdChevronRight
+          className="opacity-50 cursor-pointer hover:opacity-100"
+          onClick={slideRight}
+          size={40}
+        />
       </div>
       <hr className="my-4 ml-5 mx-auto w-full h-1 bg-gray-600 rounded border-0 md:my-10 dark:bg-gray-700" />
       <p className="text-2xl ml-5 p-2 font-semibold">

@@ -1,28 +1,26 @@
 import React from "react";
+import { Card } from "flowbite-react";
 
 export default function CardComponent({ name }) {
   return (
-      <div className="flex w-128 h-43 overflow-hidden rounded-lg hover:shadow-xl transition-shadow duration-300 ease-in-out shadow-lg bg-white ">
-        <div className="flex-none w-2/3 md:w-1/3 mr-8 md:pb-4 border rounded-lg">
-          <img
-            className="object-cover w-full h-48"
-            src="https://cdn.pixabay.com/photo/2022/08/18/09/20/houses-7394390__340.jpg"
-            alt="image"
-          />
-        </div>
-
-        <div className="p-4">
-          <h4 className="text-xl font-semibold tracking-tight text-blue-600">
-            {name} with Image
-          </h4>
-          <p className="mb-2 leading-normal">
-            react tailwind css card with image It is a long established fact
-            that a reader will be distracted by the readable content.
+    <div className="className='w-[220px] inline-block p-2 cursor-pointer">
+      <div className="max-w-lg">
+        <Card
+          horizontal={true}
+          imgSrc="https://flowbite.com/docs/images/blog/image-4.jpg"
+        >
+          <div className="whitespace-pre-line">
+          <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Noteworthy technology acquisitions 2021 {name}
+          </h5>
+          <p className="font-normal text-gray-700 dark:text-gray-400">
+            Here are the biggest enterprise technology acquisitions of 2021 so
+            far, in reverse chronological order.
           </p>
-          <button className="px-4 py-2 text-sm text-blue-100 bg-blue-500 rounded shadow">
-            Read more
-          </button>
-        </div>
+          </div>
+          
+        </Card>
       </div>
+    </div>
   );
 }
