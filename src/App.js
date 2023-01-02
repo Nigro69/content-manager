@@ -11,9 +11,11 @@ import Writers from "./pages/Writers";
 import Setting from "./pages/Setting";
 import { useStateContext } from './contexts/ContextProvider';
 import Permissions from "./pages/Permissions";
+import Roles from "./pages/Roles";
+import NewPost from "./pages/NewPost";
 
 function App() {
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+  const {activeMenu} = useStateContext();
 
   return (
     <div className="App ">
@@ -37,6 +39,7 @@ function App() {
           >
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/post" element={<NewPost />} />
             <Route path="/activity" element={<Activity />} />
             <Route path="/site" element={<Site />} />
             <Route path="/overview" element={<Overview />} />
@@ -45,6 +48,7 @@ function App() {
             <Route path="/writers" element={<Writers />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/permissions" element={<Permissions />} />
+            <Route path="/setting/permissions/roles" element={<Roles />} />
           </Routes>
           </div>
         </div>
