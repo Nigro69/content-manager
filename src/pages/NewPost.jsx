@@ -8,7 +8,7 @@ export default function NewPost() {
   const [content, setContent] = useState("");
   const [modal, setmodal] = useState(false);
   const config = {
-    placeholder: "Srart Writing Article...",
+    placeholder: "Start Writing Article...",
   };
 
   const reset = () => {
@@ -48,7 +48,7 @@ export default function NewPost() {
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={onclick}>Post Article</Button>
-            <Button color="gray" onClick={()=>setmodal(false)}>
+            <Button color="gray" onClick={() => setmodal(false)}>
               continue editing
             </Button>
           </Modal.Footer>
@@ -56,12 +56,12 @@ export default function NewPost() {
       )}
 
       <div className=" my-4 gap-5">
-      <button
-            onClick={onclick}
-            className="bg-white my-4 mx-4 hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-1 px-2 rounded-full"
-          >
-            Preview and Next
-          </button>
+        <button
+          onClick={onclick}
+          className="bg-white my-4 mx-4 hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-1 px-2 rounded-full"
+        >
+          Preview and Next
+        </button>
         <button
           onClick={reset}
           className="bg-blue-500 my-4 mx-4 hover:bg-blue-300 text-white font-semibold py-1 px-2 rounded-full"

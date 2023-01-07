@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiMenuAlt3, HiPencilAlt } from "react-icons/hi";
 import { MdOutlineDashboard, MdLocalActivity } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
@@ -10,26 +10,58 @@ import { NavLink } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 
 const Sidebar = () => {
-  const menus = [
-    { name: "Home", link: "/", icon: MdOutlineDashboard },
-    { name: "Activity", link: "/activity", icon: MdLocalActivity },
-    { name: "Site & App", link: "/site", icon: SiSitepoint },
-    { name: "Overview", link: "/overview", icon: TbReportAnalytics, margin: true },
-    { name: "Posts", link: "/posts", icon: BsFillFileEarmarkPostFill },
-    { name: "Catagories", link: "/catagories", icon: FiFolder },
-    { name: "Writers", link: "/writers", icon: HiPencilAlt, margin: true },
-    { name: "Setting", link: "/setting", icon: RiSettings4Line },
-  ];
-  const [open, setOpen] = useState(true);
+  const { activeMenu, setActiveMenu, guestWriter, admin, editor, manager } =
+    useStateContext();
 
-  const { currentColor, activeMenu, setActiveMenu, screenSize } =
-  useStateContext();
+  const [menus, setmenus] = useState([]);
 
-const handleCloseSideBar = () => {
-  if (activeMenu !== undefined && screenSize <= 900) {
-    setActiveMenu(false);
-  }
-};
+  useEffect(() => {
+    if (admin) {
+      setmenus([
+        { name: "Home", link: "/", icon: MdOutlineDashboard },
+        { name: "Activity", link: "/activity", icon: MdLocalActivity },
+        { name: "Site & App", link: "/site", icon: SiSitepoint },
+        {
+          name: "Overview",
+          link: "/overview",
+          icon: TbReportAnalytics,
+          margin: true,
+        },
+        { name: "Posts", link: "/posts", icon: BsFillFileEarmarkPostFill },
+        { name: "Catagories", link: "/catagories", icon: FiFolder },
+        { name: "Writers", link: "/writers", icon: HiPencilAlt, margin: true },
+        { name: "Setting", link: "/setting", icon: RiSettings4Line },
+      ]);
+    }
+
+    if (manager) {
+      setmenus([
+        { name: "Home", link: "/", icon: MdOutlineDashboard },
+        {
+          name: "Overview",
+          link: "/overview",
+          icon: TbReportAnalytics,
+          margin: true,
+        },
+        { name: "Posts", link: "/posts", icon: BsFillFileEarmarkPostFill },
+        { name: "Catagories", link: "/catagories", icon: FiFolder },
+        { name: "Writers", link: "/writers", icon: HiPencilAlt, margin: true },
+        { name: "Setting", link: "/setting", icon: RiSettings4Line },
+      ]);
+    }
+
+    if (guestWriter) {
+      setmenus([{ name: "Posts", link: "/", icon: BsFillFileEarmarkPostFill }]);
+    }
+    if (editor) {
+      setmenus([
+        { name: "Home", link: "/", icon: MdOutlineDashboard },
+        { name: "Posts", link: "/posts", icon: BsFillFileEarmarkPostFill },
+        { name: "Catagories", link: "/catagories", icon: FiFolder },
+        { name: "Writers", link: "/writers", icon: HiPencilAlt },
+      ]);
+    }
+  }, [admin, editor, guestWriter,manager]);
 
   return (
     <section className=" flex gap-6">
@@ -43,7 +75,6 @@ const handleCloseSideBar = () => {
             size={26}
             className="cursor-pointer"
             onClick={() => setActiveMenu(!activeMenu)}
-            // onClick={handleCloseSideBar}
           />
         </div>
         <div className="mt-4 flex flex-col gap-4 relative">
@@ -52,7 +83,7 @@ const handleCloseSideBar = () => {
               to={menu?.link}
               key={i}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? '#3d3d3d' : "",
+                backgroundColor: isActive ? "#3d3d3d" : "",
               })}
               className={` ${
                 menu?.margin && "mt-5"
@@ -80,7 +111,6 @@ const handleCloseSideBar = () => {
           ))}
         </div>
       </div>
-
     </section>
   );
 };

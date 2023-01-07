@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Table } from "flowbite-react";
 import { writerData } from "../data/dummy";
 import { useNavigate } from "react-router-dom";
+import { useStateContext } from "../contexts/ContextProvider";
 
 export default function Writers() {
   const navigate = useNavigate();
@@ -9,6 +10,9 @@ export default function Writers() {
   const rolesAndPermissions = () => {
     navigate("/setting/permissions");
   };
+
+  const { manager,editor } =
+    useStateContext();
 
   return (
     <div className="w-full p-4 bg-gray-200 ">
@@ -21,12 +25,12 @@ export default function Writers() {
           </p>
         </div>
         <div className=" my-4 gap-5">
-          <button
+          {(!manager && !editor)  && <button
             onClick={rolesAndPermissions}
             className="bg-white my-4 mx-4 hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-1 px-2 rounded-full"
           >
             Roles and Permissions
-          </button>
+          </button>}
           <button className="bg-blue-500 my-4 mx-4 hover:bg-blue-300 text-white font-semibold py-1 px-2 rounded-full">
             + Add Writer
           </button>

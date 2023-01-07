@@ -5,7 +5,7 @@ import { useStateContext } from '../contexts/ContextProvider';
 
 export default function Roles() {
 
-  const {admin , superadmin , setAdmin, setSuperAdmin} = useStateContext();
+  const {admin} = useStateContext();
 
   return (
     <div className="w-full p-4 bg-gray-200 ">
@@ -20,23 +20,17 @@ export default function Roles() {
           <button className="bg-blue-500 my-4 mx-4 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded-full">
             + Create New Role
           </button>
-          {superadmin && <button className="bg-red-400 my-4 mx-4 hover:bg-red-500 text-gray-800 font-semibold py-2 px-4 rounded-full">
+          {admin && <button className="bg-red-400 my-4 mx-4 hover:bg-red-500 text-gray-800 font-semibold py-2 px-4 rounded-full">
             Transfer Ownership
           </button>}
         </div>
         
       </div>
-      <button onClick={()=>setAdmin(!admin)} className="bg-red-400 my-4 mx-4 hover:bg-red-500 text-gray-800 font-semibold py-2 px-4 rounded-full">
-            admin
-          </button>
-          <button onClick={()=>setSuperAdmin(!superadmin)} className="bg-red-400 my-4 mx-4 hover:bg-red-500 text-gray-800 font-semibold py-2 px-4 rounded-full">
-            super admin
-          </button>
       <div className="my-5 py-4 mx-4 bg-white rounded-xl grid grid-cols-1 divide-y">
         <div>
           <p className="text-xl font-semibold  p-4">General Roles</p>
         </div>
-        {admin && <div className="hover:bg-gray-200 flex flex-wrap justify-between">
+        <div className="hover:bg-gray-200 flex flex-wrap justify-between">
           <div className="max-w-2xl p-4">
             <p className="font-medium text-md px-2">Admin (Co-Owner)</p>
             <p className="text-sm px-2">
@@ -54,7 +48,7 @@ export default function Roles() {
               <MenuIcon />
             </div>
           </div>
-        </div>}
+        </div>
         <div className="hover:bg-gray-200 flex flex-wrap justify-between">
           <div className="max-w-2xl p-4">
             <p className="font-medium text-md px-2">Website Manager</p>
@@ -268,6 +262,45 @@ export default function Roles() {
         </div>
         <div className="hover:bg-gray-200 flex flex-wrap justify-between">
           <div className="max-w-2xl p-4">
+            <p className="font-medium text-md px-2">Correspondente</p>
+            <p className="text-sm px-2">
+              Responsible for write, edit, post, and promote the content on
+              their web pages or websites.
+            </p>
+          </div>
+          <div className="flex gap-4 content-center mr-4">
+            <div className="my-6">
+              <Button color="gray" pill={true}>
+                View
+              </Button>
+            </div>
+            <div className="my-6">
+              <MenuIcon />
+            </div>
+          </div>
+        </div>
+      
+        <div className="hover:bg-gray-200 flex flex-wrap justify-between">
+          <div className="max-w-2xl p-4">
+            <p className="font-medium text-md px-2">Article Managers</p>
+            <p className="text-sm px-2">
+              Responsible for overseeing technical and content-related matters
+              for blogging websites.
+            </p>
+          </div>
+          <div className="flex gap-4 content-center mr-4">
+            <div className="my-6">
+              <Button color="gray" pill={true}>
+                View
+              </Button>
+            </div>
+            <div className="my-6">
+              <MenuIcon />
+            </div>
+          </div>
+        </div>
+        <div className="hover:bg-gray-200 flex flex-wrap justify-between">
+          <div className="max-w-2xl p-4">
             <p className="font-medium text-md px-2">Article Editor</p>
             <p className="text-sm px-2">
               Can fully manage the blog but not other areas of your site.
@@ -321,45 +354,7 @@ export default function Roles() {
             </div>
           </div>
         </div>
-        <div className="hover:bg-gray-200 flex flex-wrap justify-between">
-          <div className="max-w-2xl p-4">
-            <p className="font-medium text-md px-2">Article Managers</p>
-            <p className="text-sm px-2">
-              Responsible for overseeing technical and content-related matters
-              for blogging websites.
-            </p>
-          </div>
-          <div className="flex gap-4 content-center mr-4">
-            <div className="my-6">
-              <Button color="gray" pill={true}>
-                View
-              </Button>
-            </div>
-            <div className="my-6">
-              <MenuIcon />
-            </div>
-          </div>
-        </div>
-        <div className="hover:bg-gray-200 flex flex-wrap justify-between">
-          <div className="max-w-2xl p-4">
-            <p className="font-medium text-md px-2">Correspondente</p>
-            <p className="text-sm px-2">
-              Responsible for write, edit, post, and promote the content on
-              their web pages or websites.
-            </p>
-          </div>
-          <div className="flex gap-4 content-center mr-4">
-            <div className="my-6">
-              <Button color="gray" pill={true}>
-                View
-              </Button>
-            </div>
-            <div className="my-6">
-              <MenuIcon />
-            </div>
-          </div>
-        </div>
-      </div>
+      </div>  
       {admin &&<div className="my-5 py-4 mx-4 bg-white rounded-xl grid grid-cols-1 divide-y">
         <div>
           <p className="text-xl font-semibold  p-4">Payments Roles</p>

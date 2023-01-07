@@ -49,7 +49,7 @@ export default function Home() {
                 ? 'flex items-center max-w-screen-lg reletive mt-5 ml-5 pt-5  '
                 : 'flex items-center max-w-screen-xl reletive mt-5  pt-5 '}>
         <MdChevronLeft
-          className="opacity-50 cursor-pointer hover:opacity-100"
+          className="opacity-50 cursor-pointer hover:opacity-100  bg-white rounded-full m-2"
           onClick={slideLeft}
           size={40}
         />
@@ -64,7 +64,7 @@ export default function Home() {
           ))}
         </div>
         <MdChevronRight
-          className="opacity-50 cursor-pointer hover:opacity-100"
+          className="opacity-50 cursor-pointer hover:opacity-100 bg-white rounded-full m-2"
           onClick={slideRight}
           size={40}
         />

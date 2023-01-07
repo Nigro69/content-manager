@@ -9,8 +9,11 @@ import { TbFileInvoice } from "react-icons/tb";
 import { BsPeople, BsPerson, BsInbox } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { useStateContext } from "../contexts/ContextProvider";
 
 export default function Setting() {
+
+  const {manager} = useStateContext();
   const navigate = useNavigate();
 
   const rolesAndPermissions = () => {
@@ -81,7 +84,7 @@ export default function Setting() {
               </p>
             </div>
           </div>
-          <div className="flex max-w-xs bg-white rounded-lg hover:shadow-lg hover:bg-gray-100 cursor-pointer">
+          {(!manager) && <div className="flex max-w-xs bg-white rounded-lg hover:shadow-lg hover:bg-gray-100 cursor-pointer">
             <MdOutlinePayments className="h-7 w-7 m-2" />
             <div>
               <p className="font-bold text-lg pt-2">Accept payments</p>
@@ -89,7 +92,7 @@ export default function Setting() {
                 Choose the way you get paid by customers.
               </p>
             </div>
-          </div>
+          </div>}
           <div className="flex max-w-xs bg-white rounded-lg hover:shadow-lg hover:bg-gray-100 cursor-pointer">
             <TbFileInvoice className="h-7 w-7 m-2" />
             <div>
@@ -108,7 +111,7 @@ export default function Setting() {
               </p>
             </div>
           </div>
-          <div className="flex max-w-xs bg-white rounded-lg hover:shadow-lg hover:bg-gray-100 cursor-pointer">
+          {(!manager) && <div className="flex max-w-xs bg-white rounded-lg hover:shadow-lg hover:bg-gray-100 cursor-pointer">
             <MdDomainVerification className="h-7 w-7 m-2" />
             <div>
               <p className="font-bold text-lg pt-2">Domains</p>
@@ -116,8 +119,8 @@ export default function Setting() {
                 Connect, manage and edit your website's address.
               </p>
             </div>
-          </div>
-          <div onClick={rolesAndPermissions} className="flex max-w-xs bg-white rounded-lg hover:shadow-lg hover:bg-gray-100 cursor-pointer">
+          </div>}
+          {(!manager) && <div onClick={rolesAndPermissions} className="flex max-w-xs bg-white rounded-lg hover:shadow-lg hover:bg-gray-100 cursor-pointer">
             <BsPeople className="h-7 w-7 m-2" />
             <div>
               <p className="font-bold text-lg pt-2">Roles & permissions</p>
@@ -125,8 +128,8 @@ export default function Setting() {
                 Invite people to work on this site and set their permissions.
               </p>
             </div>
-          </div>
-          <div className="flex max-w-xs bg-white rounded-lg hover:shadow-lg hover:bg-gray-100 cursor-pointer">
+          </div>}
+          {(!manager) && <div className="flex max-w-xs bg-white rounded-lg hover:shadow-lg hover:bg-gray-100 cursor-pointer">
             <BsPerson className="h-7 w-7 m-2" />
             <div>
               <p className="font-bold text-lg pt-2">Site member settings</p>
@@ -134,7 +137,7 @@ export default function Setting() {
                 Manage site members’ login, signup, profiles and security.
               </p>
             </div>
-          </div>
+          </div>}
         </div>
         <hr className="my-4 w-full h-1 bg-gray-200 rounded border-0 md:my-10 dark:bg-gray-700" />
         <p className="uppercase text-gray-500 text-sm font-semibold">

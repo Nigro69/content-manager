@@ -1,6 +1,4 @@
 import React from "react";
-import { horizontalCardsData } from "../data/dummy";
-import Card from "../components/Card";
 import {postTableData} from '../data/dummy';
 
 export default function test() {
@@ -31,7 +29,7 @@ export default function test() {
                     {row.date}
                 </td>
                 <td className="py-4 px-6 text-right">
-                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a href="/activity" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </td>
             </tr>
             ))}
