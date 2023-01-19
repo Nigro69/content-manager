@@ -18,10 +18,28 @@ export const ContextProvider = ({ children }) => {
   const [isClicked, setIsClicked] = useState(initialState);
 
   //Levels
-  const [admin, setAdmin]=useState(false);
+  const [admin, setAdmin]=useState(true);
   const [manager, setmanager] = useState(false);
   const [editor, seteditor] = useState(false);
-  const [guestWriter, setguestWriter]=useState(true);
+  const [guestWriter, setguestWriter]=useState(false);
+
+  // attributes for manager to customize post
+
+  const [manageblog, setmanageblog] = useState({
+    WriterName:true,
+    Image:true,
+    Badge:true,
+    ReadingTime:true,
+    PublishDate:true,
+    CategoryLabel:true,
+    MoreActionMenu:true,
+    CommentsCounter:true,
+    Description:true,
+    ViewCounter:true,
+    LikesCounter:true,
+    Tags:true,
+
+  });
 
   const setMode = (e) => {
     setCurrentMode(e.target.value);
@@ -37,7 +55,7 @@ export const ContextProvider = ({ children }) => {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <StateContext.Provider value={{manager,setmanager,setguestWriter,guestWriter,editor,seteditor, admin, setAdmin, currentColor, currentMode, activeMenu, screenSize, setScreenSize, handleClick, isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setCurrentMode, setMode, setColor, themeSettings, setThemeSettings }}>
+    <StateContext.Provider value={{manageblog,setmanageblog,manager,setmanager,setguestWriter,guestWriter,editor,seteditor, admin, setAdmin, currentColor, currentMode, activeMenu, screenSize, setScreenSize, handleClick, isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setCurrentMode, setMode, setColor, themeSettings, setThemeSettings }}>
       {children}
     </StateContext.Provider>
   );

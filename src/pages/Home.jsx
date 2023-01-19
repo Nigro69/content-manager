@@ -1,12 +1,12 @@
 import React from "react";
 import Card from "../components/Card";
-import DropdownButton from "../components/DropdownButton";
 import { horizontalCardsData, toolData } from "../data/dummy";
 import Test from "../components/Test";
 import ToolCard from "../components/ToolCard";
 import { Link, useNavigate } from "react-router-dom";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { useStateContext } from '../contexts/ContextProvider';
+import Dropdown from "../components/Dropdown";
 
 export default function Home() {
 
@@ -36,8 +36,8 @@ export default function Home() {
             Track and improve how your blog is performing.
           </p>
         </div>
-        <div className="content-center gap-5">
-          <DropdownButton />
+        <div className="flex place-items-center gap-5">
+          <Dropdown />
           <button onClick={newPost} class="bg-blue-500 my-4 mx-4 hover:bg-blue-300 text-white font-semibold py-1 px-2 rounded-full">
             + Create New Post
           </button>
