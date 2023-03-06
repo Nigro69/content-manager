@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
-import { horizontalCardsData, toolData } from "../data/dummy";
+import { toolData } from "../data/dummy";
 import Test from "../components/Test";
 import ToolCard from "../components/ToolCard";
 import { Link, useNavigate } from "react-router-dom";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import { useStateContext } from '../contexts/ContextProvider';
+import { MdChevronLeft, MdChevronRight, MdDelete } from "react-icons/md";
+import { useStateContext } from "../contexts/ContextProvider";
 import Dropdown from "../components/Dropdown";
+import axios from "../axios";
 
 export default function Home() {
-
   const navigate = useNavigate();
 
   const newPost = () => {
     navigate("post");
   };
 
-   const {activeMenu} = useStateContext();
+  const { activeMenu } = useStateContext();
 
   const slideLeft = () => {
     var slider = document.getElementById("slider");
@@ -27,6 +27,28 @@ export default function Home() {
     var slider = document.getElementById("slider");
     slider.scrollLeft = slider.scrollLeft + 500;
   };
+
+  const [blogsData, setblogsData] = useState([]);
+  const [errorMessage, seterrorMessage] = useState('');
+  const [isPending, setisPending] = useState(true);
+
+  const getMyResult = async () => {
+    try {
+      const res = await axios.get("/api/blogs/");
+      console.log(res.data);
+      setblogsData(res.data);
+      setisPending(false);
+    } catch (error) {
+      console.log(error.message);
+      seterrorMessage(error.message);
+      setisPending(false);
+    }
+  };
+
+  useEffect(() => {
+    getMyResult();
+  },[]);
+
   return (
     <div className="w-full p-4 bg-gray-200 ">
       <div className="flex justify-between mb-6">
@@ -38,31 +60,44 @@ export default function Home() {
         </div>
         <div className="flex place-items-center gap-5">
           <Dropdown />
-          <button onClick={newPost} class="bg-blue-500 my-4 mx-4 hover:bg-blue-300 text-white font-semibold py-1 px-2 rounded-full">
+          <button
+            onClick={newPost}
+            class="bg-blue-500 my-4 mx-4 hover:bg-blue-300 text-white font-semibold py-1 px-2 rounded-full"
+          >
             + Create New Post
           </button>
         </div>
       </div>
       <p className="text-2xl ml-5 p-2 font-semibold">Latest Posts </p>
 
-      <div className={activeMenu
-                ? 'flex items-center max-w-screen-lg reletive mt-5 ml-5 pt-5  '
-                : 'flex items-center max-w-screen-xl reletive mt-5  pt-5 '}>
+      <div
+        className={
+          activeMenu
+            ? "flex items-center max-w-screen-lg reletive mt-5 ml-5 pt-5  "
+            : "flex items-center max-w-screen-xl reletive mt-5  pt-5 "
+        }
+      >
         <MdChevronLeft
           className="opacity-50 cursor-pointer hover:opacity-100  bg-white rounded-full m-2"
           onClick={slideLeft}
           size={40}
         />
+        {isPending ? <p>Loading...</p> :
         <div
           id="slider"
           className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
         >
-          {horizontalCardsData.map((card) => (
           
-              <Card name={card.cardName} />
-            
+          {blogsData.map((card,index) => (
+            <Card
+              key={index+1}
+              id={card.id}
+              name={card.title}
+              description={card.description}
+              image={card.image}
+            />
           ))}
-        </div>
+        </div>}
         <MdChevronRight
           className="opacity-50 cursor-pointer hover:opacity-100 bg-white rounded-full m-2"
           onClick={slideRight}

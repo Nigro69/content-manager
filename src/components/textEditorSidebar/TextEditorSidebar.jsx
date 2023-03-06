@@ -11,7 +11,7 @@ import { categoryData } from "../../data/dummy";
 import { nanoid } from "nanoid";
 import { useStateContext } from "../../contexts/ContextProvider";
 
-const TextEditorSidebar = ({getTagsData , getReadingTime}) => {
+const TextEditorSidebar = ({getTagsData , getReadingTime , getTitle}) => {
 
   const {setmanageblog, manageblog } = useStateContext();
 
@@ -35,7 +35,11 @@ const TextEditorSidebar = ({getTagsData , getReadingTime}) => {
   const handleAddSubmit = (e) => {
     e.preventDefault();
     const newTitle = { title,time };
+    getTitle(`<p><strong style="font-size: 48px;">${title}</strong></p>`);
+    setshowAdd(false);
     console.log(newTitle);
+    settitle("")
+    settime("")
     getReadingTime(newTitle.time);
   };
   const addCategory = (e) => {

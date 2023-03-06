@@ -20,13 +20,23 @@ import NewCategory from "./pages/NewCategory";
 import WriterProfile from "./pages/WriterProfile";
 import ManageBlog from "./pages/ManageBlog";
 import WriterInfo from "./pages/WriterInfo";
+import DetailedBlog from "./pages/DetailedBlog";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
-  const { activeMenu, guestWriter, admin, editor,manager } = useStateContext();
+  const { activeMenu, guestWriter, admin, editor,manager,authToken } = useStateContext();
 
   return (
     <div className="App ">
       <BrowserRouter>
+        {!authToken ? <div>
+          <Routes>
+          <Route path="/" element={<Login/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          </Routes>
+        </div>:
         <div className="flex relative">
           {activeMenu ? (
             <div className="w-60 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
@@ -47,6 +57,8 @@ function App() {
             {(admin) && (
               <Routes>
                 <Route path="/dashboard" element={<Home />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard/detailed-blog" element={<DetailedBlog />} />
                 <Route path="/dashboard/post" element={<NewPost />} />
                 <Route path="/posts/post" element={<NewPost />} />
                 <Route path="/activity" element={<Activity />} />
@@ -70,6 +82,8 @@ function App() {
             {(manager) && (
               <Routes>
                 <Route path="/dashboard" element={<Home />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard/detailed-blog" element={<DetailedBlog />} />
                 <Route path="/dashboard/post" element={<NewPost />} />
                 <Route path="/manage-blog" element={<ManageBlog />} />
                 <Route path="/posts/post" element={<NewPost />} />
@@ -89,6 +103,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Posts />} />
                 <Route path="/posts" element={<Posts />} />
+                <Route path="/dashboard/post" element={<NewPost />} />
+                <Route path="/dashboard/detailed-blog" element={<DetailedBlog />} />
                 <Route path="/post" element={<NewPost />} />
                 <Route path="/posts/post" element={<NewPost />} />
               </Routes>
@@ -98,6 +114,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/dashboard" element={<Home />} />
+                <Route path="/dashboard/detailed-blog" element={<DetailedBlog />} />
                 <Route path="/dashboard/post" element={<NewPost />} />
                 <Route path="/post" element={<NewPost />} />
                 <Route path="/posts/post" element={<NewPost />} />
@@ -109,7 +126,7 @@ function App() {
               </Routes>
             )}
           </div>
-        </div>
+        </div>}
       </BrowserRouter>
     </div>
   );

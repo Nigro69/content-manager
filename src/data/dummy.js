@@ -24,7 +24,7 @@ export const horizontalCardsData = [
     cardName: "React card",
   },
   {
-    id: 6,
+    id: 7,
     cardName: "React card",
   },
 ];

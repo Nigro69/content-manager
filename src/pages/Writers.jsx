@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Card, Table } from "flowbite-react";
-import { writerData } from "../data/dummy";
+import axios from "../axios";
 import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 import { nanoid } from "nanoid";
+import { useEffect } from "react";
 
 export default function Writers() {
   const navigate = useNavigate();
@@ -27,6 +28,21 @@ export default function Writers() {
   const [modal, setmodal] = useState(false);
   const [inviteWriterModal, setinviteWriterModal] = useState(false);
 
+  const [writersData,setwritersData]=useState([]);
+  const getMyResult = async () => {
+    try {
+      const res = await axios.get("/api/writers/");
+      console.log(res.data);
+      setwritersData(res.data)
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getMyResult();
+  },[]);
+
   const [role, setrole] = useState('Blog editor')
   const [mail, setmail] = useState('')
 
@@ -38,8 +54,8 @@ export default function Writers() {
   }
 
 ;
-  const gotoWriterInfo=(id)=>{
-    navigate("writer-info", {state:{id:id }});
+  const gotoWriterInfo=(id,name,bio)=>{
+    navigate("writer-info", {state:{id:id,name:name,bio:bio }});
   };
 
 
@@ -98,14 +114,14 @@ export default function Writers() {
         <Table hoverable={true}>
           <Table.Head className="bg-gray-400">
             <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Role</Table.HeadCell>
-            <Table.HeadCell>Post Count</Table.HeadCell>
+            <Table.HeadCell>Interests</Table.HeadCell>
+            <Table.HeadCell>Bio</Table.HeadCell>
             <Table.HeadCell>
               <span className="sr-only">Edit</span>
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            {writerData.map((itr) => (
+            {writersData.map((itr) => (
               <Table.Row
                 key={itr.id}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -113,11 +129,11 @@ export default function Writers() {
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   {itr.name}
                 </Table.Cell>
-                <Table.Cell>{itr.role}</Table.Cell>
-                <Table.Cell>{itr.postCount}</Table.Cell>
+                <Table.Cell>{itr.interests}</Table.Cell>
+                <Table.Cell>{itr.bio}</Table.Cell>
                 <Table.Cell>
                   <button
-                    onClick={()=>gotoWriterInfo(itr.id)}
+                    onClick={()=>gotoWriterInfo(itr.id,itr.name,itr.bio)}
                     className="font-semibold text-sm tracking-widest bg-gray-200 p-2 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white"
                   >
                     View

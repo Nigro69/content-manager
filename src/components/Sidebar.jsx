@@ -6,12 +6,15 @@ import { RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { SiSitepoint } from "react-icons/si";
 import { BsFillFileEarmarkPostFill } from "react-icons/bs";
-import { FiFolder } from "react-icons/fi";
-import { NavLink } from "react-router-dom";
+import { FiFolder, FiLogOut } from "react-icons/fi";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
+import { getRole, getToken, removeRole, removeToken } from "../LocalStorage";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/config";
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu, guestWriter, admin, editor, manager } =
+  const { activeMenu, setActiveMenu, guestWriter, admin, editor, manager, setauthToken,setAdmin ,setmanager,seteditor,setguestWriter} =
     useStateContext();
 
   const [dd1, setdd1] = useState(false);
@@ -32,6 +35,29 @@ const Sidebar = () => {
     setdd3(!dd3);
     setdd1(false);
     setdd2(false);
+  }
+
+  const navigate = useNavigate();
+  const logOut = async () => {
+    try {
+      const res = await signOut(auth);
+      removeToken();
+      removeRole();
+      const yash=getToken();
+      setauthToken(yash);
+      const barman=getRole();
+      setAdmin(false);
+      setmanager(false);
+      seteditor(false);
+      setguestWriter(false);
+      navigate("/");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleLogOut =()=>{
+    logOut();
   }
 
   return (
@@ -436,6 +462,8 @@ const Sidebar = () => {
             </h2>
           </NavLink>}
         </div>
+      <button onClick={handleLogOut} className=" text-sm absolute bottom-5 flex place-items-center  gap-3 px-14 font-medium p-2 hover:bg-gray-800 rounded-md"
+          >Log out <FiLogOut/></button>
       </div>
     </section>
   );

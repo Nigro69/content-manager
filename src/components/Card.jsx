@@ -1,25 +1,38 @@
 import React from "react";
 import { Card } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
-export default function CardComponent({ name }) {
+export default function CardComponent({ name, image, description, id }) {
+
+  const navigate = useNavigate();
+  const detailedView=(id)=>{
+    navigate('detailed-blog', {state:{id:id}});
+  }
+
   return (
-    <div className="className='w-[220px] inline-block p-2 cursor-pointer">
-      <div className="max-w-lg">
-        <Card
+    <div onClick={()=>{detailedView(id)}} className="className='w-[220px] inline-block rounded-md p-2 cursor-pointer">
+      <div className="max-w-lg flex bg-gray-white rounded-md shadow-lg">
+        <div >
+          <img className="h-52 w-52 object-cover rounded-l-md" src={image} alt="" />
+        </div>
+        <div className="whitespace-pre-line w-[250px]">
+          <div className="text-xl font-bold p-2">{name}</div>
+          <div className="text-sm tracking-widest p-2"><p>{description.slice(0,100)}</p></div>
+        </div>
+        {/* <Card
           horizontal={true}
-          imgSrc="https://flowbite.com/docs/images/blog/image-4.jpg"
+          imgSrc={image}
         >
           <div className="whitespace-pre-line">
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Noteworthy technology acquisitions 2021 {name}
+             {name}
           </h5>
           <p className="font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
+            {description}
           </p>
           </div>
           
-        </Card>
+        </Card> */}
       </div>
     </div>
   );

@@ -1,19 +1,33 @@
 import React, { useState } from "react";
 import { GrAdd } from "react-icons/gr";
-import { nanoid } from "nanoid";
 import { MdChevronLeft, MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import {auth} from '../firebase/config'
+import axios from '../axios'
 
 const WriterProfile = () => {
   const [title, settitle] = useState("");
   const [name, setname] = useState("");
+  const [bio, setbio] = useState("");
   const [file, setFile] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = nanoid();
-    const newCategory = { id, name, title, file };
-    console.log(newCategory);
+    getMyResult(name,title,bio,auth.currentUser.email)
+  };
+
+  const getMyResult = async (name,intrests,bio,email) => {
+    try {
+      const res = await axios.post("/api/writers/",{
+        "name": name,
+        "email": email,
+        "interests": intrests,
+        "bio": bio,
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const navigate = useNavigate();
@@ -73,13 +87,22 @@ const WriterProfile = () => {
               placeholder="Add name here"
               required
             />
-            <p className="p-1 m-1 font-semibold ">Title:</p>
+            <p className="p-1 m-1 font-semibold ">Interests:</p>
             <input
               className="border border-blue-500 rounded-full w-96"
               type="text"
               value={title}
               onChange={(e) => settitle(e.target.value)}
               placeholder="e.g Food Bloger, Guest Author"
+              required
+            />
+            <p className="p-1 m-1 font-semibold ">Bio:</p>
+            <input
+              className="border border-blue-500 rounded-full w-96"
+              type="text"
+              value={bio}
+              onChange={(e) => setbio(e.target.value)}
+              placeholder="e.g loves to write article"
               required
             />
             {!file && (

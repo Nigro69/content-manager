@@ -3,25 +3,116 @@ import DataTable from "react-data-table-component";
 import { Chart } from "react-google-charts";
 import { writerData } from "../data/dummy";
 import { AiFillEye } from "react-icons/ai";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Modal } from "flowbite-react";
+import axios from '../axios'
 
 const WriterInfo = () => {
 
+  const navigate = useNavigate();
+
+  const seeBlog=(id)=>{
+    navigate('/dashboard/detailed-blog', {state:{id:id}});
+  }
+
   const date= new Date().toLocaleDateString("de-DE");
-  console.log(date);
 
   const location = useLocation();
   useEffect(() => {
-    console.log(location.state.id - 1);
+    console.log(location.state.id);
   }, [location]);
 
-  const postsData = writerData[location.state.id - 1].posts;
+  const [postsData, setpostsData] = useState([])
+  const [tasksData, settasksData] = useState([]);
+
+  const getmyResult = async () => {
+    try {
+      const res = await axios.get("/api/blogs/");
+      let array= res.data
+      let resArray=[];
+      { array.map((itr)=>(
+        (itr.host === location.state.id  &&  resArray.push(itr))
+      ))}
+      console.log(postsData);
+      setpostsData(resArray);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const gettasksResult = async () => {
+    try {
+      const res = await axios.get("/api/tasks/");
+      let array= res.data
+      let resArray=[
+        [
+          { type: "string", label: "Task ID" },
+          { type: "string", label: "Task Name" },
+          { type: "string", label: "Description" },
+          { type: "date", label: "Start Date" },
+          { type: "date", label: "End Date" },
+          { type: "number", label: "Duration" },
+          { type: "number", label: "Percent Complete" },
+          { type: "string", label: "Dependencies" },
+        ]
+      ];
+      { array.map((itr)=>{
+        {itr.writer === location.state.id && resArray.push(
+          [
+            itr.id,
+            itr.name,
+            itr.description,
+            new Date(itr.start_date),
+            new Date(itr.end_date),
+            null,
+            itr.completed?100:0,
+            null,
+          ]
+        )}
+      })}
+      console.log(resArray);
+      settasksData(resArray);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getmyResult();
+    gettasksResult();
+  }, [])
+  
 
   const [openTab, setOpenTab] = useState(1);
   const [newTask, setnewTask] = useState(false);
+  const [name, setname] = useState("")
+  const [description, setdescription] = useState("")
+  const [end_date, setend_date] = useState("")
 
-  const tasksData = writerData[location.state.id - 1].tasksData;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(name,description,end_date,date)
+    getMyResult(name,description,date,end_date);
+    setname("");
+    setdescription("")
+    setend_date("");
+    setnewTask(false)
+  }; 
+
+  const getMyResult = async (name,description,start_date,end_date) => {
+    try {
+      const res = await axios.post("/api/tasks/",{
+        "name": name,
+        "description": description,
+        "start_date": start_date,
+        "end_date": end_date,
+        "completed": false,
+        "writer": location.state.id
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const tasksOptions = {
     height: 400,
@@ -29,8 +120,6 @@ const WriterInfo = () => {
       trackHeight: 30,
     },
   };
-
-  console.log(tasksData);
 
   const performanceData = writerData[location.state.id - 1].performanceData;
 
@@ -56,7 +145,7 @@ const WriterInfo = () => {
 
   const columnsofposts = [
     {
-      name: "Sr. No.",
+      name: "Blog ID",
       selector: (row) => row.id,
     },
     {
@@ -69,12 +158,12 @@ const WriterInfo = () => {
     },
     {
       name: "Publish Date",
-      selector: (row) => row.publishDate,
+      selector: (row) => row.created.slice(0,9),
     },
     {
       name: "",
-      cell: (row) => (
-        <AiFillEye className="h-10 w-10 text-gray-500 p-2 rounded-full cursor-pointer hover:bg-bg-gray-300 hover:text-gray-700" />
+      selector: (row) => (
+        <AiFillEye onClick={()=>seeBlog(row.id)} className="h-10 w-10 text-gray-500 p-2 rounded-full cursor-pointer hover:bg-bg-gray-300 hover:text-gray-700" />
       ),
     },
   ];
@@ -108,14 +197,14 @@ const WriterInfo = () => {
           <div className="absolute border border-gray-300 rounded-full h-[208px] w-[208px] ml-10 animate-ping" />
           <div className="absolute border border-gray-900 rounded-full h-[120px] w-[120px] left-[84px] top-[44px] animate-ping" />
           <div className="z-10 mx-10 rounded-full bg-[#979797] h-52 w-52 p-2 text-9xl grid place-items-center text-[#323643]">
-            {writerData[location.state.id - 1].name.charAt(0)}
+            {location.state.name.charAt(0)}
           </div>
           <div className="mt-5 mx-auto ">
             <div className="text-4xl font-bold p-2 font-mono tracking-widest text-center">
-              {writerData[location.state.id - 1].name}
+              {location.state.name}
             </div>
             <div className="my-1 mx-1 p-2 tracking-widest text-[#606470] text-center">
-              {writerData[location.state.id - 1].role}
+              {location.state.bio}
             </div>
           </div>
           <div className="absolute right-40 bottom-0 flex font-semibold rounded-lg">
@@ -193,24 +282,24 @@ const WriterInfo = () => {
         <Modal.Header>Create new task for {writerData[location.state.id-1].name}</Modal.Header>
         <Modal.Body>
           <div className="p-4">
-            <form>
-              <div className="tracking-widest font-semibold text-blue-500 p-1">Title:</div>
-              <input className="w-full focus:ring-0 border-b-2 focus:ring-b-2 border-blue-500 border-r-0 border-l-0 border-t-0" placeholder="Enter task name" type="text" />
+            <form onSubmit={handleSubmit}>
+              <div className="tracking-widest font-semibold text-blue-500 p-1">Name:</div>
+              <input value={name} onChange={(e)=>setname(e.target.value)} className="w-full focus:ring-0 border-b-2 focus:ring-b-2 border-blue-500 border-r-0 border-l-0 border-t-0" placeholder="Enter task name" type="text" />
               <div className="mt-5 tracking-widest font-semibold text-blue-500 p-1">Description:</div>
-              <textarea placeholder="Write description of task" className="w-full rounded-lg border border-blue-500" cols="80" rows="4"/>
+              <textarea value={description} onChange={(e)=>setdescription(e.target.value)} placeholder="Write description of task" className="w-full rounded-lg border border-blue-500" cols="80" rows="4"/>
               <div className="flex gap-4 my-2 place-items-center">
                 <div className="tracking-widest font-semibold text-blue-500 p-1">Start Date:</div>
                 <div className="tracking-widest font-semibold border border-gray-400 py-2 px-10">{date}</div>
               </div>
               <div className="flex my-2 place-items-center gap-6">
                 <div className="tracking-widest font-semibold text-blue-500 p-1">Due Date:</div>
-                <input className="border border-gray-400 font-semibold" type="date"  />
+                <input value={end_date} onChange={(e)=>setend_date(e.target.value)} className="border border-gray-400 font-semibold" type="date"  />
               </div>
             </form>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={()=>setnewTask(false)}>Create</Button>
+          <Button onClick={handleSubmit}>Create</Button>
           <Button color="gray" onClick={()=>setnewTask(false)}>
             Close
           </Button>
