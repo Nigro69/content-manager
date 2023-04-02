@@ -37,7 +37,7 @@ export default function Posts() {
 
   const getwriterId = async () => {
     try {
-      const res = await axios.get("/api/writers/");
+      const res = await axios.get("/writers/");
       console.log(res.data);
       let array = res.data;
       {
@@ -53,7 +53,7 @@ export default function Posts() {
 
   const getMyResult = async () => {
     try {
-      const res = await axios.get("/api/tasks/");
+      const res = await axios.get("/tasks/");
       console.log(res.data);
       let array = res.data;
       let resArray = [];
@@ -90,7 +90,7 @@ export default function Posts() {
 
   const getmyResult = async (name, intrests, bio, email, file) => {
     try {
-      const res = await axios.post("/api/writers/", {
+      const res = await axios.post("/writers/", {
         name: name,
         email: email,
         interests: intrests,
@@ -167,7 +167,7 @@ export default function Posts() {
 
   const getpostResult = async () => {
     try {
-      const res = await axios.get("/api/blogs/");
+      const res = await axios.get("/blogs/");
       let array = res.data;
       let resArray = [];
       {
@@ -187,7 +187,7 @@ export default function Posts() {
 
   const taskCompleted = async (id, description, end_date, name, start_date) => {
     try {
-      const res = await axios.put(`/api/task/${id}`, {
+      const res = await axios.put(`/task/${id}`, {
         name: name,
         description: description,
         start_date: start_date,

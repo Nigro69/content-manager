@@ -11,7 +11,7 @@ export default function Test() {
 
   const getMyResult = async () => {
     try {
-      const res = await axios.get("/api/blogs/");
+      const res = await axios.get("/blogs/");
       console.log(res.data);
       setarray(res.data);
     } catch (error) {
@@ -26,7 +26,7 @@ export default function Test() {
 
   const deleteBlog = async () => {
     try {
-      const res = await axios.delete(`/api/blog/${deleteId}/`);
+      const res = await axios.delete(`/blog/${deleteId}/`);
       console.log(res.data);
       setconfirmDelete(false);
     } catch (error) {

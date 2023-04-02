@@ -31,7 +31,7 @@ export default function Writers() {
   const [writersData,setwritersData]=useState([]);
   const getMyResult = async () => {
     try {
-      const res = await axios.get("/api/writers/");
+      const res = await axios.get("/writers/");
       console.log(res.data);
       setwritersData(res.data)
     } catch (error) {

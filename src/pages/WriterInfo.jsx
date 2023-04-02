@@ -27,7 +27,7 @@ const WriterInfo = () => {
 
   const getmyResult = async () => {
     try {
-      const res = await axios.get("/api/blogs/");
+      const res = await axios.get("/blogs/");
       let array= res.data
       let resArray=[];
       { array.map((itr)=>(
@@ -41,7 +41,7 @@ const WriterInfo = () => {
   };
   const gettasksResult = async () => {
     try {
-      const res = await axios.get("/api/tasks/");
+      const res = await axios.get("/tasks/");
       let array= res.data
       let resArray=[
         [
@@ -100,7 +100,7 @@ const WriterInfo = () => {
 
   const getMyResult = async (name,description,start_date,end_date) => {
     try {
-      const res = await axios.post("/api/tasks/",{
+      const res = await axios.post("/tasks/",{
         "name": name,
         "description": description,
         "start_date": start_date,

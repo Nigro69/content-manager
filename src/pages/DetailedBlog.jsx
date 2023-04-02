@@ -45,7 +45,7 @@ const DetailedBlog = () => {
 
   const getMyResult = async () => {
     try {
-        const res = await axios.get(`/api/blog/${location.state.id}/`);
+        const res = await axios.get(`/blog/${location.state.id}/`);
       setarray(res.data);
       setlikes(res.data.upvotes[0]);
       setimage(res.data.image); 

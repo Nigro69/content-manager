@@ -18,7 +18,7 @@ const WriterProfile = () => {
 
   const getMyResult = async (name,intrests,bio,email) => {
     try {
-      const res = await axios.post("/api/writers/",{
+      const res = await axios.post("/writers/",{
         "name": name,
         "email": email,
         "interests": intrests,

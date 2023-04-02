@@ -34,7 +34,7 @@ export default function Home() {
 
   const getMyResult = async () => {
     try {
-      const res = await axios.get("/api/blogs/");
+      const res = await axios.get("/blogs/");
       console.log(res.data);
       setblogsData(res.data);
       setisPending(false);

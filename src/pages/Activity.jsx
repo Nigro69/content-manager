@@ -5,7 +5,7 @@ import MenuIcon from "../components/MenuIcon";
 export default function Activity() {
   const getMyResult = async () => {
     try {
-      const res = await axios.put("http://52.198.145.124/api/task/1",{
+      const res = await axios.put("http://52.198.145.124/task/1",{
         "name": "CMS",
     "description": "Deploy on AWS",
     "start_date": "2023-01-28",

@@ -37,7 +37,7 @@ export default function NewPost() {
   const [wName, setwName] = useState("");
   const getwriterId= async ()=>{
     try {
-      const res = await axios.get("/api/writers/");
+      const res = await axios.get("/writers/");
       console.log(res.data);
       let array=res.data
       {array.map(itr=>{
@@ -50,7 +50,7 @@ export default function NewPost() {
   }
   const getwriterName= async ()=>{
     try {
-      const res = await axios.get("/api/writers/");
+      const res = await axios.get("/writers/");
       console.log(res.data);
       let array=res.data
       {array.map(itr=>{
@@ -104,7 +104,7 @@ export default function NewPost() {
 
     const updateArticle = async (id,finalTitle, finalImage, finalBody,name,host) => {
       try {
-        const res = await axios.put(`/api/blog/${id}/`, {
+        const res = await axios.put(`/blog/${id}/`, {
           title: finalTitle,
           description: finalBody,
           name:name,
@@ -127,7 +127,7 @@ export default function NewPost() {
 
   const getmyResult = async (id) => {
     try {
-      const res = await axios.get(`/api/blog/${id}/`);
+      const res = await axios.get(`/blog/${id}/`);
       console.log(res.data);
       
       setContent(`<p><strong style="font-size: 48px;">${res.data.title}</strong></p><p><strong style="font-size: 48px;"><img src=${res.data.image} alt="" width="651" height="319"></strong></p><p><strong style="font-size: 14px;"><br></strong></p><p>${res.data.description}</p>`)
@@ -139,7 +139,7 @@ export default function NewPost() {
 
   const getMyResult = async (finalTitle, finalImage, finalBody) => {
     try {
-      const res = await axios.post("/api/blogs/", {
+      const res = await axios.post("/blogs/", {
         title: finalTitle,
         description: finalBody,
         name:wName,
