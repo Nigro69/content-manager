@@ -25,6 +25,7 @@ export default function NewPost() {
   const [readingTime, setReadingTime] = useState("");
   const [modal, setmodal] = useState(false);
   const [successPost, setsuccessPost] = useState(false);
+  const [postCategory, setpostCategory] = useState("");
 
   const config = {
     placeholder:
@@ -144,9 +145,11 @@ export default function NewPost() {
         description: finalBody,
         name:wName,
         host:wId,
+        category:postCategory,
         image: finalImage,
       });
       console.log(res.data);
+      console.log(postCategory);
     } catch (error) {
       console.log(error.message);
     }
@@ -158,6 +161,9 @@ export default function NewPost() {
 
   const getReadingTime = (time) => {
     setReadingTime(time);
+  };
+  const getCategory = (category) => {
+    setpostCategory(category);
   };
 
   const getTitle = (title) => {
@@ -191,6 +197,7 @@ export default function NewPost() {
           getTagsData={getTagsData}
           getReadingTime={getReadingTime}
           getTitle={getTitle}
+          getCategory={getCategory}
         />
         <JoditEditor
           id="editor"

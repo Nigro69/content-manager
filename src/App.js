@@ -23,6 +23,7 @@ import WriterInfo from "./pages/WriterInfo";
 import DetailedBlog from "./pages/DetailedBlog";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Invite from "./pages/Invite";
 
 function App() {
   const { activeMenu, guestWriter, admin, editor,manager,authToken } = useStateContext();
@@ -73,6 +74,7 @@ function App() {
                 <Route path="/writers/new-profile" element={<WriterProfile />} />
                 <Route path="/setting" element={<Setting />} />
                 <Route path="/setting/permissions" element={<Permissions />} />
+                <Route path="/setting/permissions/invite" element={<Invite />} />
                 <Route path="/setting/permissions/roles" element={<Roles />} />
                 <Route path="/payments" element={<Payments />} />
                 <Route path="/invoices" element={<Invoices />} />

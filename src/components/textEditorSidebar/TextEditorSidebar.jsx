@@ -11,7 +11,7 @@ import { categoryData } from "../../data/dummy";
 import { nanoid } from "nanoid";
 import { useStateContext } from "../../contexts/ContextProvider";
 
-const TextEditorSidebar = ({getTagsData , getReadingTime , getTitle}) => {
+const TextEditorSidebar = ({getTagsData , getReadingTime , getTitle, getCategory}) => {
 
   const {setmanageblog, manageblog } = useStateContext();
 
@@ -30,7 +30,7 @@ const TextEditorSidebar = ({getTagsData , getReadingTime , getTitle}) => {
   const [title, settitle] = useState("");
   const [time, settime] = useState("");
   const [file, setFile] = useState();
-  const [role, setrole] = useState('')
+  const [role, setrole] = useState("")
 
   const handleAddSubmit = (e) => {
     e.preventDefault();
@@ -256,7 +256,7 @@ const TextEditorSidebar = ({getTagsData , getReadingTime , getTitle}) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => setcategories(false)}>Save</Button>
+          <Button onClick={() => {setcategories(false); getCategory(role); console.log(role);}}>Save</Button>
           <Button color="gray" onClick={() => setcategories(false)}>
             Cancel
           </Button>

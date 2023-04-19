@@ -67,7 +67,8 @@ const Sidebar = () => {
           activeMenu ? "w-60" : "w-16"
         } duration-500 text-gray-100 px-4`}
       >
-        <div className="py-3 flex justify-end">
+        <div className="py-3 flex justify-between">
+          <div className={`${!activeMenu ? "hidden" : "text-gray-100 text-sm font-semibold"} `}>{admin && "Admin Dashboard" || editor && "Editor Dashboard" || guestWriter && "Writer Dashboard" || manager && "Manager Dashboard"}</div>
           <HiMenuAlt3
             size={26}
             className="cursor-pointer"

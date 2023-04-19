@@ -1710,7 +1710,7 @@ export const performanceData = [
 export const categoryData = [
   {
     id: 1,
-    title: "Entertainment",
+    title: "Digital Research",
     subCategories: [
       { name: "Movie Reviews", postCount: 42 },
       { name: "Photos", postCount: 12 },
@@ -1722,7 +1722,7 @@ export const categoryData = [
   },
   {
     id: 2,
-    title: "Lifestyle",
+    title: "DevOps",
     subCategories: [
       { name: "Femina", postCount: 12 },
       { name: "Women", postCount: 42 },
@@ -1733,7 +1733,7 @@ export const categoryData = [
   },
   {
     id: 3,
-    title: "Business",
+    title: "Sales Intelligence",
     subCategories: [
       { name: "India Business", postCount: 12 },
       { name: "Stpartus", postCount: 12 },
@@ -1742,7 +1742,7 @@ export const categoryData = [
   },
   {
     id: 4,
-    title: "Politics",
+    title: "Legal Consultant",
     subCategories: [
       { name: "Indian", postCount: 42 },
       { name: "World", postCount: 62 },
@@ -1751,7 +1751,7 @@ export const categoryData = [
   },
   {
     id: 5,
-    title: "Sports",
+    title: "Marketing Automation",
     subCategories: [
       { name: "Cricket", postCount: 24 },
       { name: "ICC WT20", postCount: 22 },

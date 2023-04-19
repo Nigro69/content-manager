@@ -147,7 +147,7 @@ export default function Permissions() {
           >
             Manage Roles
           </button>
-          <button className="bg-blue-500 my-4 mx-4 hover:bg-blue-300 text-white font-semibold py-1 px-2 rounded-full">
+          <button onClick={()=>navigate("invite")} className="bg-blue-500 my-4 mx-4 hover:bg-blue-300 text-white font-semibold py-1 px-2 rounded-full">
             + Invite People
           </button>
         </div>
